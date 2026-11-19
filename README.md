@@ -1,0 +1,71 @@
+# LGS Hazırlık — Matematik ve Türkçe
+
+7. sınıf öğrencilerini LGS'ye hazırlamak için hazırlanmış, **telefon ve tablete uygun**, kurulum gerektirmeyen bir web uygulaması.
+
+## Özellikler
+
+- **20 konu** (10 Matematik + 10 Türkçe): her konu için çizimli, şemalı **konu anlatımı** ve çözümlü örnekler
+- **Seviyeli testler:** Her konuda 3 seviye (Kolay → Orta → LGS Seviyesi). Bir seviyede %60 başarı yakalanınca sonraki seviye açılır ve ⭐ kazanılır.
+- **Anında geri bildirim:** Seviye testlerinde her sorudan sonra doğru cevap ve adım adım çözüm
+- **Sınırsız matematik sorusu:** Matematik konularında soru üreticileri sayesinde her seferinde yeni sayılarla sorular gelir
+- **10 soruluk denemeler:** 12 Matematik, 12 Türkçe, 8 Karma deneme (20 dk) + rastgele deneme
+- **Genel LGS denemeleri:** 6 adet, 20 Türkçe + 20 Matematik, 80 dakika, LGS'deki gibi **3 yanlış 1 doğruyu götürür**
+- **Cevap kâğıdı (optik)**, boş bırakma, süre sayacı, sonuçta konu analizi ve tüm soruların çözümlü incelemesi
+- **Yanlışlarım:** Yanlış yapılan sorular kaydedilir; doğru çözülünce listeden çıkar
+- **İlerleme:** Puan, seviye, gün serisi, konu ustalık oranları ve deneme gelişim grafiği
+- Açık / koyu tema, çevrimdışı çalışma (PWA — telefona "Ana ekrana ekle" ile uygulama gibi kurulabilir)
+
+Tüm ilerleme yalnızca kullanılan cihazın tarayıcısında (localStorage) saklanır; hiçbir sunucuya veri gönderilmez.
+
+## Konular
+
+| Matematik | Türkçe |
+|---|---|
+| Tam Sayılarla İşlemler | Sözcükte Anlam |
+| Rasyonel Sayılar | Cümlede Anlam |
+| Cebirsel İfadeler | Paragrafta Anlam |
+| Eşitlik ve Denklem | Fiiller: Kip ve Kişi |
+| Oran ve Orantı | Ek Fiil ve Fiilde Yapı |
+| Yüzdeler | Zarflar |
+| Doğrular ve Açılar | Yazım ve Noktalama |
+| Çokgenler ve Alan | Söz Sanatları |
+| Çember ve Daire | Anlatım Bozuklukları |
+| Veri Analizi | Sözel Mantık ve Görsel Okuma |
+
+## Yayınlama (GitHub Pages)
+
+1. GitHub'da depo sayfasında **Settings → Pages** bölümüne gir.
+2. **Source:** "Deploy from a branch", **Branch:** `main` ve `/ (root)` seç, **Save**'e bas.
+3. Birkaç dakika sonra site `https://<kullanıcı-adı>.github.io/lgs_hazirlik/` adresinde yayında olur.
+
+## Yerelde çalıştırma
+
+Derleme adımı yoktur. Klasörde basit bir sunucu başlatmak yeterlidir:
+
+```
+python -m http.server 8765
+```
+
+Ardından tarayıcıda `http://localhost:8765` adresini aç.
+
+## Yeni soru ekleme
+
+Sorular `js/data/matematik.js` ve `js/data/turkce.js` dosyalarındadır. Bir konunun `sorular` dizisine şu biçimde soru eklenebilir:
+
+```js
+{ seviye: 2, soru: 'Soru metni', secenekler: ['A şıkkı', 'B şıkkı', 'C şıkkı', 'D şıkkı'], dogru: 1, cozum: 'Çözüm açıklaması' }
+```
+
+`dogru` alanı doğru şıkkın sırasıdır (0 = A, 1 = B, 2 = C, 3 = D). İsteğe bağlı `sekil` alanına SVG çizim eklenebilir. Şıklar uygulamada otomatik karıştırılır (I–IV ve yalnızca sayıdan oluşan şıklar hariç), bu yüzden çözüm metinlerinde "A şıkkı" gibi harf atıfları kullanılmamalıdır.
+
+## Dosya yapısı
+
+```
+index.html            Uygulama iskeleti
+css/style.css         Tasarım (mobil öncelikli, açık/koyu tema)
+js/util.js            Yardımcılar (tohumlu rastgele sayı, kesir, seçenek üretimi)
+js/app.js             Sayfalar, test motoru, denemeler, ilerleme kaydı
+js/data/matematik.js  Matematik anlatımları, çizimleri, soruları, soru üreticileri
+js/data/turkce.js     Türkçe anlatımları, şemaları ve soruları
+sw.js, manifest.json  Çevrimdışı kullanım ve ana ekrana ekleme
+```
