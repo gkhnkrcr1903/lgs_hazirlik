@@ -2,8 +2,8 @@
 (function () {
   'use strict';
   const U = window.U;
-  const DERS = { turkce: window.LGS_TR, matematik: window.LGS_MAT };
-  const DERS_SIRA = ['turkce', 'matematik']; // LGS'deki sıra
+  const DERS = { turkce: window.LGS_TR, sosyal: window.LGS_SOS, din: window.LGS_DIN, matematik: window.LGS_MAT };
+  const DERS_SIRA = ['turkce', 'sosyal', 'din', 'matematik']; // LGS'deki sıra
   const HARF = ['A', 'B', 'C', 'D'];
   const SEV = {
     1: { ad: 'Kolay', acik: 'Temel kavramlar ve basit uygulamalar' },
@@ -105,7 +105,7 @@
   function seviyeAgirlik(r, agirlik) { const x = r(); let a = 0; for (let s = 1; s <= 3; s++) { a += agirlik[s - 1]; if (x < a) return s; } return 3; }
 
   // Deneme tanımları
-  const DENEME_SAY = { matematik: 12, turkce: 12, karma: 8, lgs: 6 };
+  const DENEME_SAY = { matematik: 12, turkce: 12, sosyal: 8, din: 8, karma: 8, lgs: 9 };
   function denemeOlustur(tur, no) {
     const r = U.rng(`deneme-${tur}-${no}`);
     const used = new Set(); const qs = [];
@@ -123,8 +123,10 @@
     let baslik, sure;
     if (tur === 'matematik') { al('matematik', 10, [0.25, 0.45, 0.3]); baslik = `Matematik Denemesi ${no}`; sure = 20; }
     else if (tur === 'turkce') { al('turkce', 10, [0.25, 0.45, 0.3]); baslik = `Türkçe Denemesi ${no}`; sure = 20; }
+    else if (tur === 'sosyal') { al('sosyal', 10, [0.25, 0.45, 0.3]); baslik = `Sosyal Bilgiler Denemesi ${no}`; sure = 15; }
+    else if (tur === 'din') { al('din', 10, [0.25, 0.45, 0.3]); baslik = `Din Kültürü Denemesi ${no}`; sure = 15; }
     else if (tur === 'karma') { al('turkce', 5, [0.2, 0.5, 0.3]); al('matematik', 5, [0.2, 0.5, 0.3]); baslik = `Karma Deneme ${no}`; sure = 20; }
-    else { al('turkce', 20, [0.15, 0.45, 0.4]); al('matematik', 20, [0.15, 0.45, 0.4]); baslik = `Genel LGS Denemesi ${no}`; sure = 80; }
+    else { al('turkce', 20, [0.15, 0.45, 0.4]); al('sosyal', 10, [0.15, 0.45, 0.4]); al('din', 10, [0.15, 0.45, 0.4]); al('matematik', 20, [0.15, 0.45, 0.4]); baslik = `Genel LGS Denemesi ${no}`; sure = 120; }
     return { id: `${tur}-${no}`, tur, baslik, sure, sorular: qs };
   }
 
@@ -204,7 +206,7 @@
       <div class="grid g2">
         <button class="card action" data-act="gunun"><span class="ai">🎯</span><span><b>Günün Sorusu</b><span class="muted small">Her gün yeni bir soru</span></span><span class="go">›</span></button>
         <button class="card action" data-act="karma-hizli"><span class="ai">⚡</span><span><b>10 Soruluk Karma Deneme</b><span class="muted small">5 Türkçe + 5 Matematik · 20 dk</span></span><span class="go">›</span></button>
-        <a class="card action" href="#/denemeler"><span class="ai">🏆</span><span><b>Genel LGS Denemesi</b><span class="muted small">20 Türkçe + 20 Matematik · 80 dk</span></span><span class="go">›</span></a>
+        <a class="card action" href="#/denemeler"><span class="ai">🏆</span><span><b>Genel LGS Denemesi</b><span class="muted small">60 soru: Türkçe, Sosyal, Din, Matematik · 120 dk</span></span><span class="go">›</span></a>
         <a class="card action" href="#/yanlislar"><span class="ai">🔁</span><span><b>Yanlışlarım</b><span class="muted small">${S.yanlis.length} soru tekrar bekliyor</span></span><span class="go">›</span></a>
       </div>
       <div class="section"><h2>Nasıl çalışmalıyım?</h2></div>
@@ -228,7 +230,7 @@
     const D = DERS[d];
     app.innerHTML = `
       <div class="seg seg-wide" style="margin-bottom:14px">
-        ${DERS_SIRA.map(x => `<a href="#/ders/${x}" class="${x === d ? 'on' : ''}">${DERS[x].ikon} ${DERS[x].ad}</a>`).join('')}
+        ${DERS_SIRA.map(x => `<a href="#/ders/${x}" class="${x === d ? 'on' : ''}">${DERS[x].ikon} ${DERS[x].kisa || DERS[x].ad}</a>`).join('')}
       </div>
       <div class="page-head"><div class="ders-ikon">${D.ikon}</div><div><h1>${D.ad}</h1><div class="muted small">${D.aciklama}</div></div></div>
       <div class="grid g2">
@@ -291,7 +293,7 @@
     app.innerHTML = `
       <div class="lgs-banner">
         <h2>🏆 Genel LGS Denemeleri</h2>
-        <p style="opacity:.92">Gerçek sınav gibi: 20 Türkçe + 20 Matematik sorusu, 80 dakika. 3 yanlış 1 doğruyu götürür.</p>
+        <p style="opacity:.92">Gerçek sınav gibi: 20 Türkçe, 10 Sosyal Bilgiler, 10 Din Kültürü ve 20 Matematik sorusu, 120 dakika. 3 yanlış 1 doğruyu götürür.</p>
         <div class="dgrid" style="margin-top:10px">${Array.from({ length: DENEME_SAY.lgs }, (_, i) => {
           const sn = S.deneme[`lgs-${i + 1}`];
           return `<button class="btn" data-act="deneme" data-tur="lgs" data-no="${i + 1}">LGS ${i + 1}${sn ? ` · ${U.D(sn.net)} net` : ''}</button>`;
@@ -300,6 +302,8 @@
       ${blok('karma', 'Karma Denemeler', '5 Türkçe + 5 Mat · 20 dk', '⚡')}
       ${blok('turkce', 'Türkçe Denemeleri', '10 soru · 20 dk', '📘')}
       ${blok('matematik', 'Matematik Denemeleri', '10 soru · 20 dk', '📐')}
+      ${blok('sosyal', 'Sosyal Bilgiler Denemeleri', '10 soru · 15 dk', '🌍')}
+      ${blok('din', 'Din Kültürü Denemeleri', '10 soru · 15 dk', '☪️')}
       <div class="section"><h2>🎲 Rastgele</h2></div>
       <button class="card action" data-act="rastgele"><span class="ai">🎲</span><span><b>Rastgele 10 Soruluk Deneme</b><span class="muted small">Her seferinde farklı sorular</span></span><span class="go">›</span></button>`;
   }

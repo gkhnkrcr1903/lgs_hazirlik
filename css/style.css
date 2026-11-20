@@ -46,6 +46,11 @@
 }
 .ders-matematik { --accent: var(--mat); --accent-soft: var(--mat-soft); }
 .ders-turkce { --accent: var(--tr); --accent-soft: var(--tr-soft); }
+.ders-sosyal { --accent: #0d9488; --accent-soft: #ccfbf1; }
+.ders-din { --accent: #059669; --accent-soft: #d1fae5; }
+:root[data-theme="dark"] .ders-sosyal { --accent: #2dd4bf; --accent-soft: #123a37; }
+:root[data-theme="dark"] .ders-din { --accent: #34d399; --accent-soft: #12352a; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ders-sosyal { --accent: #2dd4bf; --accent-soft: #123a37; } :root:not([data-theme="light"]) .ders-din { --accent: #34d399; --accent-soft: #12352a; } }
 
 /* ============ Temel ============ */
 * { box-sizing: border-box; }
@@ -144,9 +149,9 @@ main { padding: 16px 0 8px; }
 .stars .off { color: var(--line); }
 
 .seg { display: inline-flex; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 4px; gap: 4px; }
-.seg a, .seg button { padding: 8px 14px; border-radius: 10px; text-decoration: none; color: var(--muted); font-weight: 800; border: 0; background: none; }
+.seg a, .seg button { padding: 8px 10px; font-size: .9rem; border-radius: 10px; text-decoration: none; color: var(--muted); font-weight: 800; border: 0; background: none; }
 .seg .on { background: var(--accent); color: #fff; }
-.seg-wide { display: flex; } .seg-wide > * { flex: 1; text-align: center; }
+.seg-wide { display: flex; flex-wrap: wrap; } .seg-wide > * { flex: 1 1 40%; text-align: center; white-space: nowrap; }
 
 .back { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--muted); font-weight: 700; margin-bottom: 10px; }
 .page-head { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }

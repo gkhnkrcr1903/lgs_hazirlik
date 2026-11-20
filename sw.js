@@ -1,6 +1,6 @@
 /* Basit çevrimdışı önbellek: önce ağ, ağ yoksa önbellek */
-const CACHE = 'lgs-hazirlik-v1';
-const DOSYALAR = ['./', 'index.html', 'css/style.css', 'js/util.js', 'js/app.js', 'js/data/matematik.js', 'js/data/turkce.js', 'manifest.json', 'icon.svg'];
+const CACHE = 'lgs-hazirlik-v2';
+const DOSYALAR = ['./', 'index.html', 'css/style.css', 'js/util.js', 'js/app.js', 'js/data/matematik.js', 'js/data/turkce.js', 'js/data/sosyal.js', 'js/data/din.js', 'manifest.json', 'icon.svg'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(DOSYALAR)).then(() => self.skipWaiting()));
