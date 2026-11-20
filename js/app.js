@@ -106,7 +106,14 @@
 
   // Deneme tanımları
   const DENEME_SAY = { matematik: 12, turkce: 12, sosyal: 8, din: 8, karma: 8, lgs: 9 };
+  function ozelOlustur(no) {
+    const O = (window.LGS_OZEL || []).find(x => x.no === no);
+    if (!O) return null;
+    const qs = O.sorular.map((q, i) => { const k = konuBul(q.ders, q.konu); const o = hazirla(Object.assign({ id: `ozel:${no}:${i}` }, q), q.ders, k); return o; });
+    return { id: `ozel-${no}`, tur: 'lgs', baslik: O.baslik, sure: O.sure, sorular: qs };
+  }
   function denemeOlustur(tur, no) {
+    if (tur === 'ozel') return ozelOlustur(no);
     const r = U.rng(`deneme-${tur}-${no}`);
     const used = new Set(); const qs = [];
     const al = (d, adet, agirlik) => {
@@ -299,6 +306,9 @@
           return `<button class="btn" data-act="deneme" data-tur="lgs" data-no="${i + 1}">LGS ${i + 1}${sn ? ` · ${U.D(sn.net)} net` : ''}</button>`;
         }).join('')}</div>
       </div>
+      <div class="section"><h2>⭐ LGS Tarzı Özel Denemeler</h2></div>
+      <p class="small muted" style="margin-top:0">Geçmiş LGS sınavlarının soru tarzında hazırlanmış özgün sorular: uzun metin, tablo, grafik ve çok adımlı problemler. 60 soru · 120 dk.</p>
+      <div class="dgrid">${(window.LGS_OZEL || []).map(o => kart('ozel', o.no, '60 soru · 120 dk · yeni nesil').replace('>Deneme ' + o.no + '<', '>Özel Deneme ' + o.no + '<')).join('')}</div>
       ${blok('karma', 'Karma Denemeler', '5 Türkçe + 5 Mat · 20 dk', '⚡')}
       ${blok('turkce', 'Türkçe Denemeleri', '10 soru · 20 dk', '📘')}
       ${blok('matematik', 'Matematik Denemeleri', '10 soru · 20 dk', '📐')}

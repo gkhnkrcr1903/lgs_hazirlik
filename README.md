@@ -10,6 +10,7 @@
 - **Sınırsız matematik sorusu:** Matematik konularında soru üreticileri sayesinde her seferinde yeni sayılarla sorular gelir
 - **10 soruluk denemeler:** 12 Türkçe, 12 Matematik, 8 Karma (20 dk); 8 Sosyal Bilgiler, 8 Din Kültürü (15 dk) + rastgele deneme
 - **Genel LGS denemeleri:** 9 adet, 20 Türkçe + 10 Sosyal Bilgiler + 10 Din Kültürü + 20 Matematik, 120 dakika, LGS'deki gibi **3 yanlış 1 doğruyu götürür**
+- **LGS Tarzı Özel Denemeler:** 2 adet, geçmiş LGS sınavlarının yeni nesil soru tarzında (uzun metin, tablo, grafik, sözel mantık, çok adımlı problem) 7. sınıf müfredatına göre hazırlanmış özgün 60'ar soru, 120 dakika
 - **Cevap kâğıdı (optik)**, boş bırakma, süre sayacı, sonuçta konu analizi ve tüm soruların çözümlü incelemesi
 - **Yanlışlarım:** Yanlış yapılan sorular kaydedilir; doğru çözülünce listeden çıkar
 - **İlerleme:** Puan, seviye, gün serisi, konu ustalık oranları ve deneme gelişim grafiği
@@ -80,5 +81,6 @@ js/data/matematik.js  Matematik anlatımları, çizimleri, soruları, soru üret
 js/data/turkce.js     Türkçe anlatımları, şemaları ve soruları
 js/data/sosyal.js     Sosyal Bilgiler anlatımları, zaman çizelgeleri ve soruları
 js/data/din.js        Din Kültürü anlatımları, şemaları ve soruları
+js/data/ozel.js       LGS tarzı 2 özel deneme (120 özgün soru)
 sw.js, manifest.json  Çevrimdışı kullanım ve ana ekrana ekleme
 ```
